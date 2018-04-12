@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "380534295664",
+    "firebase_url": "https://barkr-fe3c6.firebaseio.com",
+    "project_id": "barkr-fe3c6",
+    "storage_bucket": "barkr-fe3c6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:380534295664:android:b931e9cfe94d50f8",
+        "android_client_info": {
+          "package_name": "com.example.christianalderite.barkr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "380534295664-qke0c3cqv582d23mh0b6pf29cf0mn48o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.christianalderite.barkr",
+            "certificate_hash": "9a4fd2865d1e759f99ec6dac727902cf9cd4fc55"
+          }
+        },
+        {
+          "client_id": "380534295664-qr3aa1lj31ab90tpiahctnvgtq6vbcu4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBeYyqhvCOCCCmk13kKJBzDN3kuW87YQBg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "380534295664-qr3aa1lj31ab90tpiahctnvgtq6vbcu4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

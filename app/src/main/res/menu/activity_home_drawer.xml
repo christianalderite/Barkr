@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <item android:title="Explore">
+        <menu >
+            <item
+                android:id="@+id/nav_main"
+                android:icon="@android:drawable/ic_menu_slideshow"
+                android:title="Match Pets" />
+            <!--<item-->
+                <!--android:id="@+id/nav_owners"-->
+                <!--android:icon="@android:drawable/ic_menu_gallery"-->
+                <!--android:title="Match Owners" />-->
+            <item
+                android:id="@+id/nav_program"
+                android:icon="@android:drawable/ic_menu_my_calendar"
+                android:title="Programs" />
+        </menu>
+    </item>
+    <item android:title="Your Stuff">
+        <menu >
+            <item
+                android:id="@+id/nav_your_pets"
+                android:icon="@android:drawable/ic_menu_slideshow"
+                android:title="Your Pets" />
+            <item
+                android:id="@+id/nav_your_programs"
+                android:icon="@android:drawable/ic_menu_my_calendar"
+                android:title="Your Programs" />
+            <item
+                android:id="@+id/nav_joined_programs"
+                android:icon="@android:drawable/ic_menu_my_calendar"
+                android:title="Joined Programs" />
+        </menu>
+    </item>
+    <item android:title="">
+        <menu>
+            <item
+                android:id="@+id/nav_account"
+                android:title="Account"/>
+            <item
+                android:id="@+id/nav_logout"
+                android:title="Logout"/>
+        </menu>
+    </item>
+
+</menu>

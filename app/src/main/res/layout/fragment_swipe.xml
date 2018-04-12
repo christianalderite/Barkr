@@ -1,0 +1,25 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.christianalderite.barkr.SwipeStuff.SwipeFragment">
+
+    <include layout="@layout/single_pet_card" />
+
+
+    <!-- TODO: Update blank fragment splash -->
+
+    <include layout="@layout/buttons" />
+
+    <com.lorentzos.flingswipe.SwipeFlingAdapterView
+        android:id="@+id/frame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/fui_transparent"
+        app:rotation_degrees="15.5">
+
+    </com.lorentzos.flingswipe.SwipeFlingAdapterView>
+
+
+</FrameLayout>

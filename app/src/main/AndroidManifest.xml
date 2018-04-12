@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.christianalderite.barkr">
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-feature android:name="android.hardware.camera" />
+
+    <application
+        android:allowBackup="false"
+        android:fullBackupContent="false"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".IntroStuff.Login"
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".IntroStuff.Register"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".PetStuff.AddPet"
+            android:label="Add a pet"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ProgramStuff.AddProgram"
+            android:label="Add a program"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PetStuff.ViewPet"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ProgramStuff.ViewProgram"
+            android:screenOrientation="portrait" />
+        <!-- <activity android:namMainActivitywipe"></activity> -->
+        <activity
+            android:name=".HomeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <!-- <service -->
+        <!-- android:name=".MyFirebaseMessagingService"> -->
+        <!-- <intent-filter> -->
+        <!-- <action android:name="com.google.firebase.MESSAGING_EVENT"/> -->
+        <!-- </intent-filter> -->
+        <!-- </service> -->
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDErgk__m69Xx4Pzrlnbq_5kLufHeuXMkQ" />
+
+        <activity
+            android:name=".PetStuff.ChoosePet"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".IntroStuff.AddFirstPet"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MatchesStuff.ChatActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".EditAccount"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SwipeStuff.FullCardActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".IntroStuff.InitAccount"></activity>
+    </application>
+
+</manifest>
