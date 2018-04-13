@@ -101,8 +101,7 @@ public class Register extends AppCompatActivity {
                     if(!TextUtils.isEmpty(editEmail.getText().toString())
                         && !TextUtils.isEmpty(editPassword.getText().toString())
                         && !TextUtils.isEmpty(editConfirm.getText().toString())
-                        && editConfirm.getText().toString()
-                        == editPassword.getText().toString()){
+                        && editConfirm.getText().toString().equals(editPassword.getText().toString())){
 
                     Utilities.showLoadingDialog(Register.this);
                     final String email = editEmail.getText().toString();
@@ -115,7 +114,7 @@ public class Register extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (!task.isSuccessful()) {
                                         Utilities.dismissDialog();
-                                        
+
                                         try {
                                             throw task.getException();
                                         } catch(FirebaseAuthWeakPasswordException e) {
@@ -125,10 +124,11 @@ public class Register extends AppCompatActivity {
                                         } catch(FirebaseAuthUserCollisionException e) {
                                             Toast.makeText(Register.this, "An account with that email already exists.", Toast.LENGTH_LONG).show();
                                         } catch(Exception e) {
-                                           Toast.makeText(Register.this, "Something went wrong.", Toast.LENGTH_LONG).show();
+                                            Toast.makeText(Register.this, "Something went wrong.", Toast.LENGTH_LONG).show();
                                         }
                                     
                                     } else {
+                                        Toast.makeText(Register.this, "Registered account! Uploading user info.", Toast.LENGTH_LONG).show();
                                         user = auth.getCurrentUser();
                                         uploadImage();
                                     }
@@ -138,7 +138,7 @@ public class Register extends AppCompatActivity {
 
                 }else{
                     String append = ".";
-                    if(editConfirm.getText().toString()!=editPassword.getText().toString()){
+                    if(!editConfirm.getText().toString().equals(editPassword.getText().toString())){
                         append=" and confirm password.";
                     }
                     Toast.makeText(Register.this, "Please fill all fields"+append, Toast.LENGTH_LONG).show();

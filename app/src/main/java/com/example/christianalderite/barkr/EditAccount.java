@@ -91,6 +91,8 @@ public class EditAccount extends AppCompatActivity {
 
         radioGroup = findViewById(R.id.radioGroup);
 
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
             userImageUri = sharedPreferences.getString("userImageUri","");
             editFirstName.setText(sharedPreferences.getString("userName",""));
             editBirthDate.setText(sharedPreferences.getString("userBirthDate",""));

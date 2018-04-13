@@ -67,7 +67,7 @@ public class InitAccount extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_account);
-        setTitle("Edit your profile...");
+        setTitle("Provide your details...");
 
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xFF669900));
         getSupportActionBar().setElevation(0);
