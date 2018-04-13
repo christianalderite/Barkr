@@ -3,6 +3,7 @@ package com.example.christianalderite.barkr.ProgramStuff;
 
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -59,7 +60,7 @@ public class ProgramsFragment extends Fragment {
     private SearchView searchView;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_programs, container, false);
         main = (HomeActivity) getActivity();
@@ -121,7 +122,7 @@ public class ProgramsFragment extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 programList.clear();
                 for(DataSnapshot snapshot : dataSnapshot.child("programs").getChildren()){
-                    if(snapshot.exists() && !dataSnapshot.child("programParticipants").child(snapshot.getKey()).hasChild(user.getUid())) {
+                    if(!dataSnapshot.child("programParticipants").child(snapshot.getKey()).hasChild(user.getUid())) {
                         ProgramModel program = snapshot.getValue(ProgramModel.class);
                         programList.add(program);
                     }
@@ -129,7 +130,7 @@ public class ProgramsFragment extends Fragment {
                 pAdapter.notifyDataSetChanged();
                 main.dismissDialog();
                 if(programList.isEmpty()){
-                    main.basicAlert("Nothing to show", "You haven't joined any programs.");
+                    main.basicAlert("Nothing to show", "There are no programs to join.");
                 }
             }
 
