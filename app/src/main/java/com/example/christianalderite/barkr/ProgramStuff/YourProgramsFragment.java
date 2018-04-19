@@ -1,9 +1,7 @@
 package com.example.christianalderite.barkr.ProgramStuff;
 
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -66,6 +64,7 @@ public class YourProgramsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         view = inflater.inflate(R.layout.fragment_your_programs, container, false);
         main = (HomeActivity) getActivity();
 
@@ -139,6 +138,7 @@ public class YourProgramsFragment extends Fragment {
         refUserPrograms.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                main.dismissDialog();
                 programList.clear();
                 if (dataSnapshot.exists()) {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
@@ -147,7 +147,6 @@ public class YourProgramsFragment extends Fragment {
                     }
                 }
                 pAdapter.notifyDataSetChanged();
-                main.dismissDialog();
                 if(programList.isEmpty()){
                     main.basicAlert("Nothing to show", "You haven't created any program yet.");
                 }

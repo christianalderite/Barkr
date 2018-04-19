@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.christianalderite.barkr.HomeActivity;
 import com.example.christianalderite.barkr.R;
+import com.example.christianalderite.barkr.Utilities;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -89,6 +90,7 @@ public class PetsAdapter extends RecyclerView.Adapter<PetsAdapter.MyViewHolder> 
         }catch (Exception e){
 
         }
+        Utilities.loadImage(yourPets, pet.getPetImageUri(),holder.petImage);
 
     }
 

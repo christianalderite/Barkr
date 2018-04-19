@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
 import android.location.Geocoder;
@@ -30,11 +29,8 @@ import android.widget.ImageView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.example.christianalderite.barkr.EditAccount;
-import com.example.christianalderite.barkr.HomeActivity;
-import com.example.christianalderite.barkr.PetStuff.AddPet;
 import com.example.christianalderite.barkr.R;
-import com.example.christianalderite.barkr.UserModel;
+import com.example.christianalderite.barkr.Utilities;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
@@ -43,25 +39,16 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
-import java.nio.channels.GatheringByteChannel;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 public class AddProgram extends AppCompatActivity {
@@ -120,12 +107,7 @@ public class AddProgram extends AppCompatActivity {
             editEndTime.setText(bundle.getString("endTime"));
             editDescription.setText(bundle.getString("description"));
 
-            try {
-                Picasso.with(AddProgram.this).load(programImageUri).fit().centerCrop().into(programImage);
-            }catch (Exception e){
-                programImage.setScaleType(ImageView.ScaleType.CENTER);
-                programImage.setImageResource(R.drawable.ic_menu_camera);
-            }
+            Utilities.loadImage(AddProgram.this, programImageUri,programImage);
         }
 
         programImage.setOnClickListener(new View.OnClickListener(){

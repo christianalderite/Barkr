@@ -1,9 +1,7 @@
 package com.example.christianalderite.barkr.PetStuff;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.widget.CardView;
@@ -14,10 +12,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.christianalderite.barkr.HomeActivity;
-import com.example.christianalderite.barkr.IntroStuff.Login;
 import com.example.christianalderite.barkr.R;
-import com.squareup.picasso.Picasso;
+import com.example.christianalderite.barkr.Utilities;
 
 import java.util.List;
 
@@ -103,10 +99,8 @@ public class ChoosePetAdapter extends RecyclerView.Adapter<ChoosePetAdapter.MyVi
         holder.name.setText(pet.getName());
         holder.ageGenderBreed.setText(pet.getGender()+" "+pet.getBreed()+" born on "+pet.getBirthdate());
         holder.description.setText(pet.getOthers());
-        try {
-            Picasso.with(choosePet).load(pet.getPetImageUri()).fit().centerCrop().into(holder.petImage);
-        }catch (Exception e){
-        }
+        
+        Utilities.loadImage(choosePet,pet.getPetImageUri(),holder.petImage);
     }
 
 

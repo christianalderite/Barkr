@@ -4,7 +4,6 @@ package com.example.christianalderite.barkr.ProgramStuff;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,18 +15,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import com.example.christianalderite.barkr.HomeActivity;
 import com.example.christianalderite.barkr.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -47,7 +43,6 @@ public class ProgramsFragment extends Fragment {
     private HomeActivity main;
 
     private ArrayList<ProgramModel> programList = new ArrayList<>();
-    //private ArrayList<ProgramModel> yourprogramList=new ArrayList<>();
     private RecyclerView recyclerView;
     private ProgramsAdapter pAdapter;
 
@@ -62,6 +57,7 @@ public class ProgramsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         view = inflater.inflate(R.layout.fragment_programs, container, false);
         main = (HomeActivity) getActivity();
         setHasOptionsMenu(true);
@@ -120,6 +116,7 @@ public class ProgramsFragment extends Fragment {
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                main.dismissDialog();
                 programList.clear();
                 for(DataSnapshot snapshot : dataSnapshot.child("programs").getChildren()){
                     if(!dataSnapshot.child("programParticipants").child(snapshot.getKey()).hasChild(user.getUid())) {
@@ -128,7 +125,6 @@ public class ProgramsFragment extends Fragment {
                     }
                 }
                 pAdapter.notifyDataSetChanged();
-                main.dismissDialog();
                 if(programList.isEmpty()){
                     main.basicAlert("Nothing to show", "There are no programs to join.");
                 }

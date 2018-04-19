@@ -1,19 +1,11 @@
 package com.example.christianalderite.barkr.MatchesStuff;
 
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.preference.Preference;
 import android.preference.PreferenceManager;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -23,27 +15,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.christianalderite.barkr.HomeActivity;
-import com.example.christianalderite.barkr.PetStuff.AddPet;
 import com.example.christianalderite.barkr.PetStuff.ChoosePet;
 import com.example.christianalderite.barkr.PetStuff.PetModel;
-import com.example.christianalderite.barkr.PetStuff.PetsAdapter;
 import com.example.christianalderite.barkr.R;
-import com.example.christianalderite.barkr.SwipeStuff.cards;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.example.christianalderite.barkr.Utilities;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -66,18 +49,12 @@ public class MatchesFragment extends Fragment {
     private CardView cardView;
     private ImageView headerPetImage;
     private TextView headerPetName;
-
     private RecyclerView recyclerView;
     private MatchesAdapter mAdapter;
-
     private String currentPetId, currentPetName, currentPetImageUri;
 
     SharedPreferences sharedPreferences;
-
     FirebaseDatabase database = FirebaseDatabase.getInstance();
-    FirebaseAuth auth = FirebaseAuth.getInstance();
-    FirebaseUser user = auth.getCurrentUser();
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -148,7 +125,6 @@ public class MatchesFragment extends Fragment {
                         petMatches.add(match);
                     }
                 }
-                main.dismissDialog();
                 mAdapter.notifyDataSetChanged();
                 if(petMatches.isEmpty()){
                     main.basicAlert("Nothing to show","No matches for this pet yet.");
@@ -170,7 +146,7 @@ public class MatchesFragment extends Fragment {
 
     public void setUpPetCard(){
         headerPetName.setText(currentPetName);
-        Picasso.with(main).load(currentPetImageUri).fit().centerCrop().into(headerPetImage);
+        Utilities.loadImage(main, currentPetImageUri, headerPetImage);
         main.setPetHeader(currentPetImageUri);
 
         cardView.setVisibility(View.VISIBLE);

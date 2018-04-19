@@ -3,23 +3,19 @@ package com.example.christianalderite.barkr;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.ColorDrawable;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -30,10 +26,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import com.example.christianalderite.barkr.IntroStuff.AddFirstPet;
-import com.example.christianalderite.barkr.IntroStuff.Register;
-import com.example.christianalderite.barkr.PetStuff.AddPet;
-import com.example.christianalderite.barkr.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -43,7 +35,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
@@ -55,13 +46,13 @@ public class EditAccount extends AppCompatActivity {
 
     private String[] imagePermissions = {Manifest.permission.INTERNET, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
 
-    private EditText editFirstName, editLastName, editBirthDate, editBio;
+    private EditText editFirstName, editBirthDate, editBio;
     private RadioGroup radioGroup;
     private RadioButton radioBtnGender, radioBtnMale, radioBtnFemale;
     private Button btnSubmit, btnCancel;
     private ImageView userImage;
     private Uri userImageFirebaseUri;
-    private String userImageUri, existenceId;
+    private String userImageUri;
 
     SharedPreferences sharedPreferences;
 
@@ -93,23 +84,18 @@ public class EditAccount extends AppCompatActivity {
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
-            userImageUri = sharedPreferences.getString("userImageUri","");
-            editFirstName.setText(sharedPreferences.getString("userName",""));
-            editBirthDate.setText(sharedPreferences.getString("userBirthDate",""));
-            editBio.setText(sharedPreferences.getString("userBio",""));
+        userImageUri = sharedPreferences.getString("userImageUri","");
+        editFirstName.setText(sharedPreferences.getString("userName",""));
+        editBirthDate.setText(sharedPreferences.getString("userBirthDate",""));
+        editBio.setText(sharedPreferences.getString("userBio",""));
 
-            if(sharedPreferences.getString("userGender","").equalsIgnoreCase("male")){
-                radioBtnMale.setChecked(true);
-            }else{
-                radioBtnFemale.setChecked(true);
-            }
+        if(sharedPreferences.getString("userGender","").equalsIgnoreCase("male")){
+            radioBtnMale.setChecked(true);
+        }else{
+            radioBtnFemale.setChecked(true);
+        }
 
-            try {
-                Picasso.with(this).load(userImageUri).fit().centerCrop().into(userImage);
-            }catch (Exception e){
-                userImage.setScaleType(ImageView.ScaleType.CENTER);
-                userImage.setImageResource(R.drawable.ic_menu_camera);
-            }
+        Utilities.loadImage(this, userImageUri, userImage);
 
         userImage.setOnClickListener(new View.OnClickListener(){
             @Override

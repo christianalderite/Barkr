@@ -10,12 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.christianalderite.barkr.HomeActivity;
-import com.example.christianalderite.barkr.MatchesStuff.ChatActivity;
-import com.example.christianalderite.barkr.PetStuff.PetModel;
 import com.example.christianalderite.barkr.R;
-import com.squareup.picasso.Picasso;
-
-import org.w3c.dom.Text;
+import com.example.christianalderite.barkr.Utilities;
 
 import java.util.List;
 
@@ -70,11 +66,7 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.MyViewHo
         MatchModel pet = matchList.get(position);
         holder.name.setText(pet.getMatchName()+" ("+pet.getMatchOwner()+")");
         holder.message.setText(pet.getEarliestMessage());
-        try {
-            Picasso.with(main).load(pet.getMatchUri()).fit().centerCrop().into(holder.image);
-        }catch (Exception e){
-
-        }
+        Utilities.loadImage(main, pet.getMatchUri(), holder.image);
     }
 
     //Gets the size of the Array List

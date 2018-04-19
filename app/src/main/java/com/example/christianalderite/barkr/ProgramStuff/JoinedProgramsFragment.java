@@ -3,7 +3,6 @@ package com.example.christianalderite.barkr.ProgramStuff;
 
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,7 +24,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -122,6 +120,7 @@ public class JoinedProgramsFragment extends Fragment {
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                main.dismissDialog();
                 programList.clear();
                 for(DataSnapshot snapshot : dataSnapshot.child("programs").getChildren()){
                     if(dataSnapshot.child("programParticipants").child(snapshot.getKey()).hasChild(user.getUid())) {
@@ -130,7 +129,6 @@ public class JoinedProgramsFragment extends Fragment {
                     }
                 }
                 pAdapter.notifyDataSetChanged();
-                main.dismissDialog();
                 if(programList.isEmpty()){
                     main.basicAlert("Nothing to show", "You haven't joined any programs.");
                 }

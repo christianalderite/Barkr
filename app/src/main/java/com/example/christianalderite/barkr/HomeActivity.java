@@ -1,17 +1,11 @@
 package com.example.christianalderite.barkr;
 
-import android.app.AlertDialog;
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -22,9 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.christianalderite.barkr.IntroStuff.AddFirstPet;
 import com.example.christianalderite.barkr.IntroStuff.Login;
 import com.example.christianalderite.barkr.MatchesStuff.MatchesFragment;
 import com.example.christianalderite.barkr.PetStuff.YourPetsFragment;
@@ -32,16 +24,13 @@ import com.example.christianalderite.barkr.ProgramStuff.JoinedProgramsFragment;
 import com.example.christianalderite.barkr.ProgramStuff.ProgramsFragment;
 import com.example.christianalderite.barkr.ProgramStuff.YourProgramsFragment;
 import com.example.christianalderite.barkr.SwipeStuff.SwipeFragment;
-import com.firebase.ui.auth.data.model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -60,6 +49,7 @@ public class HomeActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -72,14 +62,17 @@ public class HomeActivity extends AppCompatActivity
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        Utilities.networkAlert(this);
+
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         if(!sharedPreferences.getString("userId","").equals(user.getUid())){
             this.loadUserInformation();
         }else {
             this.setHeaderView();
-            if(sharedPreferences.getBoolean("hasPet",false)==false){
-                this.checkIfHasPet();
-            }
+            this.swipeFragment();
+//            if(sharedPreferences.getBoolean("userHasPet",false)==false){
+//                this.checkIfHasPet();
+//            }
         }
     }
 
@@ -117,9 +110,10 @@ public class HomeActivity extends AppCompatActivity
         editor.apply();
 
         this.setHeaderView();
-        if(sharedPreferences.getBoolean("hasPet",false)==false){
-            this.checkIfHasPet();
-        }
+        this.swipeFragment();
+//        if(sharedPreferences.getBoolean("userHasPet",false)==false){
+//            this.checkIfHasPet();
+//        }
     }
 
     public void setHeaderView(){
@@ -129,11 +123,7 @@ public class HomeActivity extends AppCompatActivity
         TextView personFullName = headerView.findViewById(R.id.personFullName);
         TextView personEmail = headerView.findViewById(R.id.personEmail);
 
-        try {
-            Picasso.with(this).load(sharedPreferences.getString("userImageUri", "")).fit().centerCrop().into(personPhoto);
-        }catch (Exception e){
-        }
-
+        Utilities.loadImage(this, sharedPreferences.getString("userImageUri",""), personPhoto);
         personFullName.setText(sharedPreferences.getString("userName", ""));
         personEmail.setText(sharedPreferences.getString("userEmail", ""));
 
@@ -142,11 +132,7 @@ public class HomeActivity extends AppCompatActivity
     public void setPetHeader(String uri){
         headerView = navigationView.getHeaderView(0);
         ImageView petPhoto = headerView.findViewById(R.id.petPhoto);
-        try {
-            Picasso.with(this).load(uri).fit().centerCrop().into(petPhoto);
-        }catch (Exception e){
-            petPhoto.setImageResource(R.drawable.splash_logo);
-        }
+        Utilities.loadImage(this, uri, petPhoto);
     }
 
     @Override
@@ -191,7 +177,7 @@ public class HomeActivity extends AppCompatActivity
             YourPetsFragment fragment = new YourPetsFragment();
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.frame, fragment, "Your Pets");
-            fragmentTransaction.addToBackStack(null);
+            //fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
             setTitle("Your pals");
         }
@@ -202,7 +188,7 @@ public class HomeActivity extends AppCompatActivity
             YourProgramsFragment fragment = new YourProgramsFragment();
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.frame, fragment, "Your Programs");
-            fragmentTransaction.addToBackStack(null);
+            //fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
             setTitle("Events you created");
         }
@@ -210,7 +196,7 @@ public class HomeActivity extends AppCompatActivity
             ProgramsFragment fragment = new ProgramsFragment();
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.frame, fragment, "Programs");
-            fragmentTransaction.addToBackStack(null);
+            //fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
             setTitle("Events");
         }
@@ -218,7 +204,7 @@ public class HomeActivity extends AppCompatActivity
             JoinedProgramsFragment fragment = new JoinedProgramsFragment();
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.frame, fragment, "Joined Programs");
-            fragmentTransaction.addToBackStack(null);
+            //fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
             setTitle("Events you've joined");
         }
@@ -236,7 +222,7 @@ public class HomeActivity extends AppCompatActivity
             AccountFragment fragment = new AccountFragment();
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.frame, fragment, "Account");
-            fragmentTransaction.addToBackStack(null);
+            //fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
             setTitle("Profile");
         }
@@ -250,7 +236,7 @@ public class HomeActivity extends AppCompatActivity
         SwipeFragment fragment = new SwipeFragment();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frame, fragment, "Match Pets");
-        fragmentTransaction.addToBackStack(null);
+        //fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
         setTitle("Finding matches for...");
     }
@@ -259,7 +245,7 @@ public class HomeActivity extends AppCompatActivity
         MatchesFragment fragment = new MatchesFragment();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frame, fragment, "Your Pets");
-        fragmentTransaction.addToBackStack(null);
+        //fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
         setTitle("Messages for...");
     }
@@ -278,34 +264,6 @@ public class HomeActivity extends AppCompatActivity
 
     public void taskFailedAlert(){
         Utilities.taskFailedAlert(this);
-    }
-
-    public void checkIfHasPet() {
-        showLoadingDialog();
-        DatabaseReference refPets = database.getReference("pets");
-        final Query refFirstUserPet = refPets.orderByChild("ownerId").equalTo(auth.getCurrentUser().getUid());
-        refFirstUserPet.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                dismissDialog();
-                if (!dataSnapshot.exists()) {
-                    Intent toAddFirstPet = new Intent(HomeActivity.this, AddFirstPet.class);
-                    startActivity(toAddFirstPet);
-                    finish();
-                }else{
-                    sharedPreferences = PreferenceManager.getDefaultSharedPreferences(HomeActivity.this);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putBoolean("userHasPet",true);
-                    editor.apply();
-                    swipeFragment();
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                dismissDialog();
-                taskFailedAlert();
-            }
-        });
     }
 
 }

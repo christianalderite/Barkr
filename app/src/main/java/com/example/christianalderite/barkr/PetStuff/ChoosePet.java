@@ -1,22 +1,12 @@
 package com.example.christianalderite.barkr.PetStuff;
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.ProgressBar;
 
-import com.example.christianalderite.barkr.HomeActivity;
 import com.example.christianalderite.barkr.R;
 import com.example.christianalderite.barkr.Utilities;
 import com.google.firebase.auth.FirebaseAuth;
@@ -83,7 +73,7 @@ public class ChoosePet extends AppCompatActivity {
                     petList.add(pet);
                 }
                 pAdapter.notifyDataSetChanged();
-               Utilities.dismissDialog();
+                Utilities.dismissDialog();
             }
 
             @Override

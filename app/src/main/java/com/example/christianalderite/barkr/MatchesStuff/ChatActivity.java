@@ -1,13 +1,11 @@
 package com.example.christianalderite.barkr.MatchesStuff;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
-import android.preference.PreferenceManager;
-import android.provider.Telephony;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,12 +14,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.christianalderite.barkr.PetStuff.PetModel;
-import com.example.christianalderite.barkr.PetStuff.ViewPet;
-import com.example.christianalderite.barkr.ProgramStuff.ProgramModel;
-import com.example.christianalderite.barkr.ProgramStuff.ProgramsAdapter;
 import com.example.christianalderite.barkr.R;
 import com.example.christianalderite.barkr.Utilities;
 import com.google.firebase.database.ChildEventListener;
@@ -30,7 +24,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -104,13 +97,7 @@ public class ChatActivity extends AppCompatActivity {
                     breedTV.setText(pet.getGender()+" "+pet.getBreed() +" born on "+pet.getBirthdate());
                     petdescTV.setText(pet.getOthers());
                     petnameTV.setText(pet.getName());
-
-                    try{
-                        Picasso.with(ChatActivity.this)
-                        .load(pet.getPetImageUri()).fit().centerCrop().into(petImage);
-                    }catch (Exception e){
-
-                    }
+                    Utilities.loadImage(ChatActivity.this, pet.getPetImageUri(), petImage);
                 }else{
                     finish();
                 }

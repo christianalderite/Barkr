@@ -14,17 +14,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.firebase.ui.auth.data.model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
 
 
 /**
@@ -41,8 +33,6 @@ public class AccountFragment extends Fragment {
 
     FirebaseAuth auth = FirebaseAuth.getInstance();
     FirebaseUser user = auth.getCurrentUser();
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
-
     SharedPreferences sharedPreferences;
 
     public AccountFragment() {
@@ -84,13 +74,8 @@ public class AccountFragment extends Fragment {
         accountSex.setText(sharedPreferences.getString("userGender",""));
         accountBirthDate.setText(sharedPreferences.getString("userBirthDate",""));
 
-        try {
-            Picasso.with(main)
-            .load(sharedPreferences.getString("userImageUri",""))
-            .fit().centerCrop().into(accountPhoto);
-        }catch (Exception e){
-            
-        }
+        Utilities.loadImage(main, sharedPreferences.getString("userImageUri",""), accountPhoto);
+
         accountEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -102,7 +87,7 @@ public class AccountFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(resultCode== Activity.RESULT_OK){
+        if(resultCode == Activity.RESULT_OK){
             this.prepareUserInfo();
             main.setHeaderView();
         }

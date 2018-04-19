@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.christianalderite.barkr.R;
-import com.squareup.picasso.Picasso;
+import com.example.christianalderite.barkr.Utilities;
 
 import java.util.List;
 
@@ -50,11 +50,8 @@ public class ParticipantsAdapter extends RecyclerView.Adapter<ParticipantsAdapte
     public void onBindViewHolder(MyViewHolder holder, int position) {
         ParticipantModel participant = participantsList.get(position);
         holder.name.setText(participant.getDisplayName());
-        try {
-            Picasso.with(viewProgram).load(participant.getImageUri()).fit().centerCrop().into(holder.image);
-        }catch (Exception e){
-            holder.image.setImageResource(R.drawable.com_facebook_profile_picture_blank_square);
-        }
+
+        Utilities.loadImage(viewProgram, participant.getImageUri(), holder.image);
     }
 
     @Override

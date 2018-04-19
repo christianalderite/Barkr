@@ -1,18 +1,11 @@
 package com.example.christianalderite.barkr.SwipeStuff;
 
-import android.app.ActionBar;
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,27 +13,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.christianalderite.barkr.HomeActivity;
-import com.example.christianalderite.barkr.PetStuff.AddPet;
 import com.example.christianalderite.barkr.PetStuff.ChoosePet;
 import com.example.christianalderite.barkr.PetStuff.PetModel;
-import com.example.christianalderite.barkr.PetStuff.ViewPet;
 import com.example.christianalderite.barkr.R;
+import com.example.christianalderite.barkr.Utilities;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,9 +63,7 @@ public class SwipeFragment extends Fragment {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     FirebaseAuth auth = FirebaseAuth.getInstance();
     FirebaseUser user = auth.getCurrentUser();
-    FirebaseStorage storage = FirebaseStorage.getInstance();
 
-    // List<cards> rowItems = new ArrayList<>();
     List<PetModel> rowItems = new ArrayList<>();
 
 
@@ -207,12 +193,7 @@ public class SwipeFragment extends Fragment {
     public void setUpPetCard(){
 
         headerPetName.setText(currentPetName);
-
-        try {
-            Picasso.with(main).load(currentPetImageUri).fit().centerCrop().into(headerPetImage);
-        }catch (Exception e){
-
-        }
+        Utilities.loadImage(main, currentPetImageUri, headerPetImage);
         main.setPetHeader(currentPetImageUri);
 
         cardView.setVisibility(View.VISIBLE);
@@ -230,6 +211,7 @@ public class SwipeFragment extends Fragment {
         ref.addListenerForSingleValueEvent(new ValueEventListener(){
             @Override
             public void onDataChange(DataSnapshot dataSnapshot){
+                main.dismissDialog();
                 rowItems.clear();
                 if(dataSnapshot.child("pets").exists()){
                     for(DataSnapshot snapshot: dataSnapshot.child("pets").getChildren()){
@@ -245,7 +227,6 @@ public class SwipeFragment extends Fragment {
                     }
                 }
                 cardsAdapter.notifyDataSetChanged();
-                main.dismissDialog();
                 if(rowItems.isEmpty()){
                     main.basicAlert("Nothing to show", "There are no pets to match.");
                 }

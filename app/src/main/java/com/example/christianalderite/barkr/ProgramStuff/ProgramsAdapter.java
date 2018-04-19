@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.example.christianalderite.barkr.HomeActivity;
 import com.example.christianalderite.barkr.R;
-import com.squareup.picasso.Picasso;
+import com.example.christianalderite.barkr.Utilities;
 
 import java.util.List;
 
@@ -83,11 +83,8 @@ public class ProgramsAdapter extends RecyclerView.Adapter<ProgramsAdapter.MyView
         holder.fromDateToDate.setText(program.getStarttime() + " to " + program.getEndtime());
         holder.desc.setText(program.getDescription());
         holder.participants.setText(program.getParticipantsCount()+" will go...");
-        try{
-            Picasso.with(yourPrograms).load(program.getProgramImageUri()).fit().centerCrop().into(holder.imageView);
-        }catch (Exception e){
 
-        }
+        Utilities.loadImage(yourPrograms, program.getProgramImageUri(), holder.imageView);
 
     }
 

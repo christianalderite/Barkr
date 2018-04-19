@@ -1,6 +1,5 @@
 package com.example.christianalderite.barkr.PetStuff;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,14 +11,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.christianalderite.barkr.R;
+import com.example.christianalderite.barkr.Utilities;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.squareup.picasso.Picasso;
 
 public class ViewPet extends AppCompatActivity{
     private Button edit, delete;
@@ -67,11 +65,7 @@ public class ViewPet extends AppCompatActivity{
             petgender.setText(bundle.getString("gender"));
             owner.setText(bundle.getString("ownerDisplayName"));
 
-            try {
-                Picasso.with(this).load(petImageUri).fit().centerCrop().into(petImage);
-            }catch (Exception e){
-
-            }
+            Utilities.loadImage(this, petImageUri, petImage);
 
             isLastPet = bundle.getBoolean("lastPet");
 

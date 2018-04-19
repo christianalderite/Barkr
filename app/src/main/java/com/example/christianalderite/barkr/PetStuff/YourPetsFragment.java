@@ -1,13 +1,8 @@
 package com.example.christianalderite.barkr.PetStuff;
 
 
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -17,12 +12,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 
 import com.example.christianalderite.barkr.HomeActivity;
-import com.example.christianalderite.barkr.PetStuff.AddPet;
-import com.example.christianalderite.barkr.PetStuff.PetModel;
-import com.example.christianalderite.barkr.PetStuff.PetsAdapter;
 import com.example.christianalderite.barkr.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -32,7 +23,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
 
@@ -52,13 +42,10 @@ public class YourPetsFragment extends Fragment {
     private ArrayList<PetModel> petList = new ArrayList<>();
     private RecyclerView recyclerView;
     private PetsAdapter pAdapter;
-    private ProgressBar progressBar;
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     FirebaseAuth auth = FirebaseAuth.getInstance();
     FirebaseUser user = auth.getCurrentUser();
-    FirebaseStorage storage = FirebaseStorage.getInstance();
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -105,13 +92,13 @@ public class YourPetsFragment extends Fragment {
         refUserPets.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                main.dismissDialog();
                 petList.clear();
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                     PetModel pet = snapshot.getValue(PetModel.class);
                     petList.add(pet);
                 }
                 pAdapter.notifyDataSetChanged();
-                main.dismissDialog();
                 if(petList.isEmpty()){
                     main.basicAlert("No Data to Show", "You don't have pets.");
                 }
